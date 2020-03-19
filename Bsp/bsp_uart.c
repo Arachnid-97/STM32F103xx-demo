@@ -1,6 +1,9 @@
 #include "bsp_uart.h"
 
 
+#define BAUDRATE_1		115200;			// 波特率设置	支持的波特率：115200,19200,9600,38400,57600,1200,2400,4800
+#define BAUDRATE_2		115200;			// 波特率设置	支持的波特率：115200,19200,9600,38400,57600,1200,2400,4800
+
 uint8_t g_TxCounter = 0; 				// 发送数据个数
 uint8_t TxBuffer[TxBUFFER_SIZE] = {0};	// 发送暂存缓冲区
 
@@ -9,10 +12,10 @@ EVAL_COMx_TypeDef Usart1,Usart2;
 /************************************************
 函数名称 ： UART1_Config
 功    能 ： UART1端口配置
-参    数 ： Baudrate ---- 波特率
+参    数 ： 无
 返 回 值 ： 无
 *************************************************/
-void UART1_Config( uint32_t Baudrate )
+void UART1_Config(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
@@ -44,7 +47,7 @@ void UART1_Config( uint32_t Baudrate )
     NVIC_Init(&NVIC_InitStructure);
 
     /* USART1 mode config */
-    USART_InitStructure.USART_BaudRate = Baudrate;
+    USART_InitStructure.USART_BaudRate = BAUDRATE_1;
     USART_InitStructure.USART_WordLength = USART_WordLength_8b;
     USART_InitStructure.USART_StopBits = USART_StopBits_1;
     USART_InitStructure.USART_Parity = USART_Parity_No ;
@@ -59,10 +62,10 @@ void UART1_Config( uint32_t Baudrate )
 /************************************************
 函数名称 ： UART2_Config
 功    能 ： UART2端口配置
-参    数 ： Baudrate ---- 波特率
+参    数 ： 无
 返 回 值 ： 无
 *************************************************/
-void UART2_Config( uint32_t Baudrate )
+void UART2_Config(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
@@ -94,7 +97,7 @@ void UART2_Config( uint32_t Baudrate )
     NVIC_Init(&NVIC_InitStructure);
 
     /* USART2 mode config */
-    USART_InitStructure.USART_BaudRate = Baudrate;
+    USART_InitStructure.USART_BaudRate = BAUDRATE_2;
     USART_InitStructure.USART_WordLength = USART_WordLength_8b;
     USART_InitStructure.USART_StopBits = USART_StopBits_1;
     USART_InitStructure.USART_Parity = USART_Parity_No ;
@@ -199,8 +202,12 @@ void USART1_IRQHandler(void)
     if(USART_GetITStatus(EVAL_COM1, USART_IT_RXNE) != RESET)
     {
         /* Read one byte from the receive data register */
-        Usart1.RxBuffer[Usart1.RxCounter++] = (USART_ReceiveData(EVAL_COM1) & 0x7F);
-
+    #if 0
+        Usart1.RxBuffer[Usart1.RxCounter++] = (USART_ReceiveData(EVAL_COM1) & 0x7F);  // 如果使能了奇偶校验，则最高位 bit 8需要省掉
+    #else
+        Usart1.RxBuffer[Usart1.RxCounter++] = (USART_ReceiveData(EVAL_COM1) & 0xFF);  // 获取数据
+    #endif
+		
 		if(Usart1.RxCounter >= RxBUFFER_SIZE)
 		{
 //			/* Disable the EVAL_COM1 Receive interrupt */
@@ -236,7 +243,11 @@ void USART2_IRQHandler(void)
     if(USART_GetITStatus(EVAL_COM2, USART_IT_RXNE) != RESET)
     {
         /* Read one byte from the receive data register */
-        Usart2.RxBuffer[Usart2.RxCounter++] = (USART_ReceiveData(EVAL_COM2) & 0x7F);
+    #if 0
+        Usart2.RxBuffer[Usart2.RxCounter++] = (USART_ReceiveData(EVAL_COM2) & 0x7F);  // 如果使能了奇偶校验，则最高位 bit 8需要省掉
+    #else
+        Usart2.RxBuffer[Usart2.RxCounter++] = (USART_ReceiveData(EVAL_COM2) & 0xFF);  // 获取数据
+    #endif
 		
         if(Usart2.RxCounter >= RxBUFFER_SIZE)
         {

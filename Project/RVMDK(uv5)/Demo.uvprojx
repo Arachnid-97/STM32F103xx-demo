@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\App;..\..\Libraries\CMSIS;..\..\Libraries\CMSIS\startup;..\..\Libraries\STM32F10x_StdPeriph_Driver\src;..\..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\..\Bsp;..\..\Doc</IncludePath>
+              <IncludePath>..\..\App;..\..\Libraries\CMSIS;..\..\Libraries\CMSIS\startup;..\..\Libraries\STM32F10x_StdPeriph_Driver\src;..\..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\..\Bsp;..\..\Doc;..\..\W25Qxx;..\..\AT24Cxx</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1008,6 +1008,36 @@
               <FileName>bsp_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Bsp\bsp_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_iic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Bsp\bsp_iic.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Bsp\bsp_spi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>W25Qxx</GroupName>
+          <Files>
+            <File>
+              <FileName>w25qxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\W25Qxx\w25qxx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AT24Cxx</GroupName>
+          <Files>
+            <File>
+              <FileName>at24cxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\AT24Cxx\at24cxx.c</FilePath>
             </File>
           </Files>
         </Group>

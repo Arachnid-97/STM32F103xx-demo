@@ -24,8 +24,8 @@ extern EVAL_COMx_TypeDef Usart1,Usart2;
 extern uint8_t g_TxCounter;
 extern uint8_t TxBuffer[TxBUFFER_SIZE];
 
-void UART1_Config( uint32_t Baudrate );
-void UART2_Config( uint32_t Baudrate );
+void UART1_Config(void);
+void UART2_Config(void);
 void USART_SendByte( USART_TypeDef* USARTx, uint8_t c );
 void USART_SendString( USART_TypeDef* USARTx, const uint8_t *pData, uint16_t Length );
 void USART_Printf( USART_TypeDef* USARTx, char *String );

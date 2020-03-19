@@ -7,8 +7,8 @@
 #define LED_GPIO_PORT			GPIOB
 #define LED_GPIO_PIN			GPIO_Pin_0
 
-#define LED_ON					GPIO_ResetBits(GPIOB, GPIO_Pin_0)
-#define LED_OFF					GPIO_SetBits(GPIOB, GPIO_Pin_0)
+#define LED_ON					GPIO_ResetBits(LED_GPIO_PORT, LED_GPIO_PIN)
+#define LED_OFF					GPIO_SetBits(LED_GPIO_PORT, LED_GPIO_PIN)
 
 #define KEY_GPIO_PORT			GPIOA
 #define KEY_GPIO_PIN			GPIO_Pin_0

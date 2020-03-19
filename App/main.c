@@ -27,12 +27,11 @@
 #include "bsp_uart.h"
 #include "bsp_gpio.h"
 #include "bsp_adc.h"
+#include "w25qxx.h"
+#include "at24cxx.h"
 
 
 /* Private functions ---------------------------------------------------------*/
-
-const uint32_t Baudrate_1 = 115200;		// 波特率设置	支持的波特率：115200,19200,9600,38400,57600,1200,2400,4800
-const uint32_t Baudrate_2 = 115200;		// 波特率设置	支持的波特率：115200,19200,9600,38400,57600,1200,2400,4800
 
 /************************************************
 函数名称 ： main
@@ -41,7 +40,7 @@ const uint32_t Baudrate_2 = 115200;		// 波特率设置	支持的波特率：115200,19200,96
 返 回 值 ： 无
 *************************************************/
 int main(void)
-{	
+{
 	RCC_ClocksTypeDef Rcc_clock;
 
 	/* Initial Configuration */
@@ -49,18 +48,19 @@ int main(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	SysTick_Init();
 	Timer2_Config();
-	UART1_Config(Baudrate_1);
-//	UART2_Config(Baudrate_2);
+	UART1_Config();
+//	UART2_Config();
 	LED_Config();
-	Key_Config();
-	ADCx_Init();
+//	Key_Config();
+//	ADCx_Init();
+//	W25Qxx_Init();
+//	AT24Cxx_Init();
 	
 	/* -------- End -------- */
 	
 	RCC_GetClocksFreq(&Rcc_clock);
-	
-		
-    /* Infinite loop */
+
+	/* Infinite loop */
     while (1)
     {
 		if(Usart1.Frame_flag)
@@ -73,6 +73,15 @@ int main(void)
 }
 
 #if 0
+
+#ifdef __GNUC__
+  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+     set to 'Yes') calls __io_putchar() */
+  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+
 /**
   * @brief  Retargets the C library printf function to the USART.
   * @param  None

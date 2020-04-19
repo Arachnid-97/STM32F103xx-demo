@@ -165,7 +165,7 @@ void SD_test(void)
     /*------------------------------ SD Init ---------------------------------- */
     if((Status = SD_Init()) != SD_OK)
     {
-        printf("SD卡初始化失败，请确保SD卡已正确接入开发板，或换一张SD卡测试！\n");
+        DUBUG_PRINTF("SD卡初始化失败，请确保SD卡已正确接入开发板，或换一张SD卡测试！\n");
     }
 
     while((Status == SD_OK) && (SDCardOperation != SD_OPERATION_END) && (SD_Detect()== SD_PRESENT))
@@ -230,11 +230,11 @@ void SD_EraseTest(void)
 
     if(EraseStatus == PASSED)
     {
-        printf("SD卡擦除测试成功！\n");
+        DUBUG_PRINTF("SD卡擦除测试成功！\n");
     }
     else
     {
-        printf("SD卡擦除测试失败！\n");
+        DUBUG_PRINTF("SD卡擦除测试失败！\n");
     }
 }
 
@@ -275,11 +275,11 @@ void SD_SingleBlockTest(void)
 
     if(TransferStatus1 == PASSED)
     {
-        printf("Single block 测试成功！\n");
+        DUBUG_PRINTF("Single block 测试成功！\n");
     }
     else
     {
-        printf("Single block 测试失败，请确保SD卡正确接入开发板，或换一张SD卡测试！\n");
+        DUBUG_PRINTF("Single block 测试失败，请确保SD卡正确接入开发板，或换一张SD卡测试！\n");
     }
 }
 
@@ -320,11 +320,11 @@ void SD_MultiBlockTest(void)
 
     if(TransferStatus2 == PASSED)
     {
-        printf("Multi block 测试成功！");
+        DUBUG_PRINTF("Multi block 测试成功！");
     }
     else
     {
-        printf("Multi block 测试失败，请确保SD卡正确接入开发板，或换一张SD卡测试！");
+        DUBUG_PRINTF("Multi block 测试失败，请确保SD卡正确接入开发板，或换一张SD卡测试！");
     }
 }
 

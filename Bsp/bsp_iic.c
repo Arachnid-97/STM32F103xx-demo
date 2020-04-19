@@ -1,10 +1,7 @@
 #include "bsp_iic.h"
 
 
-/* 注：STM32的硬件 I2C的确有一些 BUG，或者说使用时有很多不方便满足的要求，	\
-       比如 DMA加最高中断（不使用该模式容易出现死机） */
-
-#define WAIT_TIME		25
+#define WAIT_TIME		3
 
 /************************************************
 函数名称 ： IIC_Delay_us
@@ -26,7 +23,7 @@ static void IIC_Delay_us( uint32_t Count )
 参    数 ： 无
 返 回 值 ： 0 / 1
 *************************************************/
-static uint8_t IIC_Start(void)
+uint8_t IIC_Start(void)
 {
 	IIC_SCL(HIGH);
 	IIC_SDA(HIGH);
@@ -54,7 +51,7 @@ static uint8_t IIC_Start(void)
 参    数 ： 无
 返 回 值 ： 无
 *************************************************/
-static void IIC_Stop(void)
+void IIC_Stop(void)
 {
 	IIC_SCL(LOW);
 	IIC_SDA(LOW);
@@ -72,7 +69,7 @@ static void IIC_Stop(void)
 参    数 ： 无
 返 回 值 ： 无
 *************************************************/
-static void IIC_Ack(void)
+void IIC_Ack(void)
 {
 	IIC_SDA(LOW);
     IIC_Delay_us(WAIT_TIME);
@@ -92,7 +89,7 @@ static void IIC_Ack(void)
 参    数 ： 无
 返 回 值 ： 无
 *************************************************/
-static void IIC_UnAck(void)
+void IIC_UnAck(void)
 {
 	IIC_SCL(LOW);
 	IIC_SDA(HIGH);
@@ -110,7 +107,7 @@ static void IIC_UnAck(void)
 参    数 ： 无
 返 回 值 ： 0 / 1
 *************************************************/
-static uint8_t IIC_Wait_Ack(void)
+uint8_t IIC_Wait_Ack(void)
 {
     uint8_t time = 80;
 
@@ -188,16 +185,47 @@ uint8_t Read_IIC_Byte(void)
 		IIC_SCL(HIGH);
         IIC_Delay_us(WAIT_TIME);
 
-//		if(IIC_SDA_READ)
-//		{
-//			temp++;
-//		}		
+	#if 0
+		if(IIC_SDA_READ)
+		{
+			temp++;
+		}
+	
+	#else
 		temp |= IIC_SDA_READ;
+		
+	#endif
     }
 	IIC_SCL(LOW);
 	IIC_Delay_us(WAIT_TIME);
 	
 	return temp;
+}
+
+/************************************************
+函数名称 ： Simulate_IIC_Config
+功    能 ： 模拟 IIC IO配置
+参    数 ： 无
+返 回 值 ： 无
+*************************************************/
+void Simulate_IIC_Config(void)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	
+	SL_IIC_SCL_APBxClock_FUN(SL_IIC_SCL_CLK, ENABLE);
+	SL_IIC_SDA_APBxClock_FUN(SL_IIC_SDA_CLK, ENABLE);
+	
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	
+	/* SCL */
+	GPIO_InitStructure.GPIO_Pin = SL_IIC_SCL_PINS;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+	GPIO_Init(SL_IIC_SCL_PORT, &GPIO_InitStructure);
+	
+	/* SDA */
+	GPIO_InitStructure.GPIO_Pin = SL_IIC_SDA_PINS;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+	GPIO_Init(SL_IIC_SDA_PORT, &GPIO_InitStructure);
 }
 
 

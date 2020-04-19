@@ -39,7 +39,7 @@
 #define SPI_MOSI(x)			GPIO_WriteBit(SL_SPI_MOSI_PORT, SL_SPI_MOSI_PINS, (BitAction)x)
 #define SPI_MISO			GPIO_ReadInputDataBit(SL_SPI_MISO_PORT, SL_SPI_MISO_PINS)
 
-void Write_SPI_Byte( uint8_t Byte );
+uint8_t Write_SPI_Byte( uint8_t Byte );
 uint8_t Read_SPI_Byte(void);
 void Simulate_SPI_Config(void);
 

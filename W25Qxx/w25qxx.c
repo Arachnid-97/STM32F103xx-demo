@@ -1,14 +1,14 @@
 #include "w25qxx.h"
 #include "bsp_spi.h"
 #include "bsp_uart.h"
-#include "bsp_gpio.h"
 
 
-#define _SIMULATE_SPI		1
+/* 是否启用模拟 SPI */
+#define USE_SIMULATE_SPI		0
 
 #define MAX_TIME_OUT	((uint32_t)0x1000)
 
-static __IO uint32_t W35Q_TimeOut = MAX_TIME_OUT;
+static __IO uint32_t W25Q_TimeOut = MAX_TIME_OUT;
 
 /************************************************
 函数名称 ： TimeOut_Callback
@@ -17,7 +17,7 @@ static __IO uint32_t W35Q_TimeOut = MAX_TIME_OUT;
 返 回 值 ： 错误值 0
 *************************************************/
 
-#if (0 == _SIMULATE_SPI)
+#if (0 == USE_SIMULATE_SPI)
 static uint8_t TimeOut_Callback( char ErrorCode )
 {
 	/* 等待超时后的处理,输出错误信息 */
@@ -26,7 +26,7 @@ static uint8_t TimeOut_Callback( char ErrorCode )
 	return 0;
 }
 
-#endif /* _SIMULATE_SPI */
+#endif /* USE_SIMULATE_SPI */
 
 /************************************************
 函数名称 ： SPI_Flash_SendByte
@@ -37,37 +37,35 @@ static uint8_t TimeOut_Callback( char ErrorCode )
 static uint8_t SPI_Flash_SendByte( uint8_t wData )
 {
 	
-#if _SIMULATE_SPI
-	Write_SPI_Byte(wData);
+#if USE_SIMULATE_SPI
+	return Write_SPI_Byte(wData);
 	
-	return Read_SPI_Byte();
-
 #else
-	W35Q_TimeOut = MAX_TIME_OUT;
+	W25Q_TimeOut = MAX_TIME_OUT;
 	
 	/* Wait for W25Q_SPIx Tx buffer empty */
 	while(SPI_I2S_GetFlagStatus(W25Q_SPIx, SPI_I2S_FLAG_TXE) == RESET)
 	{
-		if(0 == (W35Q_TimeOut--))
+		if(0 == (W25Q_TimeOut--))
 			return TimeOut_Callback(0);
 	}
 
 	/* Send byte through the W25Q_SPIx peripheral */
 	SPI_I2S_SendData(W25Q_SPIx, wData);
 	
-	W35Q_TimeOut = MAX_TIME_OUT;
+	W25Q_TimeOut = MAX_TIME_OUT;
 
 	/* Wait for W25Q_SPIx data reception */
 	while(SPI_I2S_GetFlagStatus(W25Q_SPIx, SPI_I2S_FLAG_RXNE) == RESET)
 	{
-		if(0 == (W35Q_TimeOut--))
+		if(0 == (W25Q_TimeOut--))
 			return TimeOut_Callback(1);
 	}
 	
 	/* Return the byte read from the W25Q_SPIx bus */
 	return SPI_I2S_ReceiveData(W25Q_SPIx);
 		
-#endif /* _SIMULATE_SPI */
+#endif /* USE_SIMULATE_SPI */
 }
 
 /************************************************
@@ -184,7 +182,7 @@ void W25Qxx_Page_Program( uint8_t *pBuffer, uint32_t Address, uint16_t Len )
 	if(Len > W25Q_PAGE_SIZE)
 	{
 		Len = W25Q_PAGE_SIZE;
-		W25Q_DUBUG_PRINTF("W25Qxx Page Program data too large!"); 
+		W25Q_DUBUG_PRINTF("W25Qxx Page Program data too large!\n"); 
 	}
 	while(Len--)
 	{
@@ -451,7 +449,7 @@ void W25Qxx_Release_PowerDown(void)
 void W25Qxx_Config(void)
 {
 	
-#if _SIMULATE_SPI
+#if USE_SIMULATE_SPI
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
 	W25Q_CS_APBxClock_FUN(W25Q_CS_CLK, ENABLE);
@@ -488,9 +486,11 @@ void W25Qxx_Config(void)
 	GPIO_Init(W25Q_CS_PORT, &GPIO_InitStructure);
 
 	/* Confugure SCK and MOSI pins as Alternate Function Push Pull */
-	GPIO_InitStructure.GPIO_Pin = W25Q_SCK_PINS;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	
+	GPIO_InitStructure.GPIO_Pin = W25Q_SCK_PINS;
 	GPIO_Init(W25Q_SCK_PORT, &GPIO_InitStructure);
+	
 	GPIO_InitStructure.GPIO_Pin = W25Q_MOSI_PINS;
 	GPIO_Init(W25Q_MOSI_PORT, &GPIO_InitStructure);
 	
@@ -521,7 +521,7 @@ void W25Qxx_Config(void)
 	/* Enable W25Q_SPIx */
 	SPI_Cmd(SPI1, ENABLE);
 	
-#endif /* _SIMULATE_SPI */
+#endif /* USE_SIMULATE_SPI */
 }
 
 /************************************************
@@ -538,18 +538,25 @@ void W25Qxx_Init(void)
 	
 #if(_W25Q_DUBUG)
 	FlashID = W25Qxx_Read_JEDECID();
-	W25Q_DUBUG_PRINTF("\r\nFlashID is 0x%X,Manufacturer Device ID is 0x%X\r\n\r\n",	\
+	W25Q_DUBUG_PRINTF("FlashID is 0x%X,Manufacturer Device ID is 0x%X\r\n",	\
 				FlashID, W25Qxx_Read_DeviceID());
 	if(FlashID != JEDEC_ID)
 	{
 		/* 读取错误处理 */
-		W25Q_DUBUG_PRINTF("\n>>>>> SPI read-write Error, please check the connection between MCU and SPI Flash\n");
+		W25Q_DUBUG_PRINTF("SPI read-write Error, please check the connection between MCU and SPI Flash\n");
 	}
 	else
 	{
 		/* 读取成功处理 */
-		W25Q_DUBUG_PRINTF("\n>>>>> SPI read-write succeed\n");
-//		LED_ON;
+		W25Q_DUBUG_PRINTF("SPI read-write succeed\n");
+		
+//		uint8_t Tx_buff[] = "FLASH读写测试实验\r\n";
+//		uint8_t Rx_buff[] = "FLASH读写测试实验\r\n";
+
+//		W25Qxx_Sector_Erase(0x0100);
+//		W25Qxx_Write_Flash(Tx_buff, 0x0100, (sizeof(Tx_buff) / sizeof(*(Tx_buff))));
+//		W25Qxx_Read_Flash(Rx_buff, 0x0100, (sizeof(Tx_buff) / sizeof(*(Tx_buff))));
+//		W25Q_DUBUG_PRINTF("读出的数据：%s\n", Rx_buff);
 	}
 
 #endif /* _W25Q_DUBUG */

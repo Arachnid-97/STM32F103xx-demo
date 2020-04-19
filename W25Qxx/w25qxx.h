@@ -32,7 +32,7 @@
 #define W25Q_SPI_APBxClock_FUN(x, y)	RCC_APB2PeriphClockCmd(x, y)
 
 /* W25Qxx GPIO */
-#define W25Q_CS_APBxClock_FUN(x, y)	RCC_APB2PeriphClockCmd(x, y)
+#define W25Q_CS_APBxClock_FUN(x, y)		RCC_APB2PeriphClockCmd(x, y)
 #define W25Q_CS_CLK				RCC_APB2Periph_GPIOC
 #define W25Q_CS_PORT   		    GPIOC
 #define W25Q_CS_PINS   		    GPIO_Pin_0

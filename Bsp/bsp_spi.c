@@ -17,7 +17,7 @@
  * 			也就是 SCLK由低电平到高电平的跳变，所以数据采集是在上升沿，数据发送是在下降沿。
 */
 #define _CPOL     1
-#define _CPHA     0
+#define _CPHA     1
 
 /************************************************
 函数名称 ： SPI_Delay_us
@@ -36,11 +36,11 @@ static void SPI_Delay_us( uint32_t Count )
 #if (0 == _CPOL && 0 == _CPHA) /* ----- MODE 0 ----- */
 /************************************************
 函数名称 ： Write_SPI_Byte
-功    能 ： SPI写一个字节
+功    能 ： SPI写读一个字节
 参    数 ： Byte ---- 数据
-返 回 值 ： 无
+返 回 值 ： Byte ---- 数据
 *************************************************/
-void Write_SPI_Byte( uint8_t Byte )
+uint8_t Write_SPI_Byte( uint8_t Byte )
 {
 	uint8_t i;
 	
@@ -63,16 +63,21 @@ void Write_SPI_Byte( uint8_t Byte )
 		}
 		
 	#endif
-		SPI_SCK(HIGH);
 		Byte <<= 1;
+		SPI_Delay_us(WAIT_TIME);       // 空等待
+		SPI_SCK(HIGH);
+		SPI_Delay_us(WAIT_TIME);       // 空等待
+		Byte |= SPI_MISO;
 	}
 	
 	SPI_SCK(LOW);
+	
+	return Byte;
 }
 
 /************************************************
 函数名称 ： Read_SPI_Byte
-功    能 ： SPI读一个字节
+功    能 ： SPI只读一个字节
 参    数 ： 无
 返 回 值 ： temp ---- 数据
 *************************************************/
@@ -83,9 +88,9 @@ uint8_t Read_SPI_Byte(void)
 	
 	for(i = 0;i < 8;i++)
 	{
-		temp <<= 1;
 		SPI_SCK(LOW);
 		SPI_Delay_us(WAIT_TIME);       // 空等待
+		temp <<= 1;
 		
 	#if 1
 		temp |= SPI_MISO;
@@ -98,7 +103,7 @@ uint8_t Read_SPI_Byte(void)
 		
 	#endif
 		SPI_SCK(HIGH);
-		temp <<= 1;
+		SPI_Delay_us(WAIT_TIME);       // 空等待
 	}
 
 	SPI_SCK(LOW);
@@ -109,11 +114,11 @@ uint8_t Read_SPI_Byte(void)
 #elif (0 == _CPOL && 1 == _CPHA) /* ----- MODE 1 ----- */
 /************************************************
 函数名称 ： Write_SPI_Byte
-功    能 ： SPI写一个字节
+功    能 ： SPI写读一个字节
 参    数 ： Byte ---- 数据
-返 回 值 ： 无
+返 回 值 ： Byte ---- 数据
 *************************************************/
-void Write_SPI_Byte( uint8_t Byte )
+uint8_t Write_SPI_Byte( uint8_t Byte )
 {
 	uint8_t i;
 
@@ -138,14 +143,19 @@ void Write_SPI_Byte( uint8_t Byte )
 		}
 		
 	#endif
-		SPI_SCK(LOW);
 		Byte <<= 1;
+		SPI_Delay_us(WAIT_TIME);       // 空等待
+		SPI_SCK(LOW);
+		SPI_Delay_us(WAIT_TIME);       // 空等待
+		Byte |= SPI_MISO;
 	}
+	
+	return Byte;
 }
 
 /************************************************
 函数名称 ： Read_SPI_Byte
-功    能 ： SPI读一个字节
+功    能 ： SPI只读一个字节
 参    数 ： 无
 返 回 值 ： temp ---- 数据
 *************************************************/
@@ -158,9 +168,9 @@ uint8_t Read_SPI_Byte(void)
 	
 	for(i = 0;i < 8;i++)
 	{
-		temp <<= 1;
 		SPI_SCK(HIGH);
 		SPI_Delay_us(WAIT_TIME);       // 空等待
+		temp <<= 1;
 		
 	#if 1
 		temp |= SPI_MISO;
@@ -173,7 +183,7 @@ uint8_t Read_SPI_Byte(void)
 		
 	#endif
 		SPI_SCK(LOW);
-		temp <<= 1;
+		SPI_Delay_us(WAIT_TIME);       // 空等待
 	}
 	
 	return temp;
@@ -182,11 +192,11 @@ uint8_t Read_SPI_Byte(void)
 #elif (1 == _CPOL && 0 == _CPHA) /* ----- MODE 2 ----- */
 /************************************************
 函数名称 ： Write_SPI_Byte
-功    能 ： SPI写一个字节
+功    能 ： SPI写读一个字节
 参    数 ： Byte ---- 数据
-返 回 值 ： 无
+返 回 值 ： Byte ---- 数据
 *************************************************/
-void Write_SPI_Byte( uint8_t Byte )
+uint8_t Write_SPI_Byte( uint8_t Byte )
 {
 	uint8_t i;
 	
@@ -209,16 +219,21 @@ void Write_SPI_Byte( uint8_t Byte )
 		}
 		
 	#endif
-		SPI_SCK(LOW);
 		Byte <<= 1;
+		SPI_Delay_us(WAIT_TIME);       // 空等待
+		SPI_SCK(LOW);
+		SPI_Delay_us(WAIT_TIME);       // 空等待
+		Byte |= SPI_MISO;
 	}
 	
 	SPI_SCK(HIGH);
+	
+	return Byte;
 }
 
 /************************************************
 函数名称 ： Read_SPI_Byte
-功    能 ： SPI读一个字节
+功    能 ： SPI只读一个字节
 参    数 ： 无
 返 回 值 ： temp ---- 数据
 *************************************************/
@@ -229,9 +244,9 @@ uint8_t Read_SPI_Byte(void)
 	
 	for(i = 0;i < 8;i++)
 	{
-		temp <<= 1;
 		SPI_SCK(HIGH);
 		SPI_Delay_us(WAIT_TIME);       // 空等待
+		temp <<= 1;
 		
 	#if 1
 		temp |= SPI_MISO;
@@ -244,7 +259,7 @@ uint8_t Read_SPI_Byte(void)
 		
 	#endif
 		SPI_SCK(LOW);
-		temp <<= 1;
+		SPI_Delay_us(WAIT_TIME);       // 空等待
 	}
 
 	SPI_SCK(HIGH);
@@ -255,11 +270,11 @@ uint8_t Read_SPI_Byte(void)
 #elif (1 == _CPOL && 1 == _CPHA) /* ----- MODE 3 ----- */
 /************************************************
 函数名称 ： Write_SPI_Byte
-功    能 ： SPI写一个字节
+功    能 ： SPI写读一个字节
 参    数 ： Byte ---- 数据
-返 回 值 ： 无
+返 回 值 ： Byte ---- 数据
 *************************************************/
-void Write_SPI_Byte( uint8_t Byte )
+uint8_t Write_SPI_Byte( uint8_t Byte )
 {
 	uint8_t i;
 
@@ -284,14 +299,19 @@ void Write_SPI_Byte( uint8_t Byte )
 		}
 		
 	#endif
-		SPI_SCK(HIGH);
 		Byte <<= 1;
+		SPI_Delay_us(WAIT_TIME);       // 空等待
+		SPI_SCK(HIGH);
+		SPI_Delay_us(WAIT_TIME);       // 空等待
+		Byte |= SPI_MISO;
 	}
+	
+	return Byte;
 }
 
 /************************************************
 函数名称 ： Read_SPI_Byte
-功    能 ： SPI读一个字节
+功    能 ： SPI只读一个字节
 参    数 ： 无
 返 回 值 ： temp ---- 数据
 *************************************************/
@@ -304,9 +324,9 @@ uint8_t Read_SPI_Byte(void)
 	
 	for(i = 0;i < 8;i++)
 	{
-		temp <<= 1;
 		SPI_SCK(LOW);
 		SPI_Delay_us(WAIT_TIME);       // 空等待
+		temp <<= 1;
 		
 	#if 1
 		temp |= SPI_MISO;
@@ -319,7 +339,7 @@ uint8_t Read_SPI_Byte(void)
 		
 	#endif
 		SPI_SCK(HIGH);
-		temp <<= 1;
+		SPI_Delay_us(WAIT_TIME);       // 空等待
 	}
 	
 	return temp;
@@ -331,7 +351,7 @@ uint8_t Read_SPI_Byte(void)
 函数名称 ： Simulate_SPI_Config
 功    能 ： 模拟 SPI IO配置
 参    数 ： 无
-返 回 值 ： temp ---- 数据
+返 回 值 ： 无
 *************************************************/
 void Simulate_SPI_Config(void)
 {

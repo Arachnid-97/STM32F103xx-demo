@@ -63,7 +63,7 @@ int main(void)
 //	ADCx_Init();
 //	W25Qxx_Init();
 //	AT24Cxx_Init();
-	RTC_Init(&RTC_Time);
+//	RTC_Init(&RTC_Time);
 	
 	/* -------- End -------- */
 	
@@ -75,7 +75,7 @@ int main(void)
     while (1)
     {
 //		RTC_Time_Scan(RTC_GetCounter());
-		
+
 		if(Usart1.Frame_flag)
 		{
 			Usart1.Frame_flag = 0;

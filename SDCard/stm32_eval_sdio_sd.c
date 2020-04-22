@@ -485,7 +485,7 @@ SDCardState SD_GetState(void)
 uint8_t SD_Detect(void)
 {
 	
-#ifdef _SD_SPECCY
+#if _SD_SPECCY
     __IO uint8_t status = SD_PRESENT;
 
     /*!< Check GPIO to detect SD */
@@ -702,7 +702,9 @@ SD_Error SD_InitializeCards(void)
         CID_Tab[2] = SDIO_GetResponse(SDIO_RESP3);
         CID_Tab[3] = SDIO_GetResponse(SDIO_RESP4);
     }
-    if ((SDIO_STD_CAPACITY_SD_CARD_V1_1 == CardType) ||  (SDIO_STD_CAPACITY_SD_CARD_V2_0 == CardType) ||  (SDIO_SECURE_DIGITAL_IO_COMBO_CARD == CardType)
+    if ((SDIO_STD_CAPACITY_SD_CARD_V1_1 == CardType) 
+		||  (SDIO_STD_CAPACITY_SD_CARD_V2_0 == CardType) 
+		||  (SDIO_SECURE_DIGITAL_IO_COMBO_CARD == CardType)
             ||  (SDIO_HIGH_CAPACITY_SD_CARD == CardType))
     {
         /*!< Send CMD3 SET_REL_ADDR with argument 0 */
@@ -849,7 +851,7 @@ SD_Error SD_GetCardInfo(SD_CardInfo *cardinfo)
         /*!< Byte 10 */
         tmp = (uint8_t)((CSD_Tab[2] & 0x0000FF00) >> 8);
 
-        cardinfo->CardCapacity = (cardinfo->SD_csd.DeviceSize + 1) * 512 * 1024;
+        cardinfo->CardCapacity = (uint64_t)(cardinfo->SD_csd.DeviceSize + 1) * 512 * 1024;
         cardinfo->CardBlockSize = 512;
     }
 

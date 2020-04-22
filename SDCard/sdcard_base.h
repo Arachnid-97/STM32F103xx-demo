@@ -4,8 +4,8 @@
 
 #include "stm32f10x.h"
 
-/* 无硬件 IO检测则需要注释 */
-//#define _SD_SPECCY
+/* 无硬件 IO检测则定义为 0 */
+#define _SD_SPECCY						0
 
 
 /**
@@ -41,7 +41,7 @@
 
 
 /* 硬件检测 IO */
-#ifdef _SD_SPECCY
+#if _SD_SPECCY
 	#define SD_DETECT_APBxClock_FUN(x, y)	RCC_APB2PeriphClockCmd(x, y)
 	#define SD_DETECT_PIN					GPIO_Pin_0                 /* PE.00 */
 	#define SD_DETECT_GPIO_PORT				GPIOE                      /* GPIOE */

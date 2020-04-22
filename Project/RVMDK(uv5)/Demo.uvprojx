@@ -1226,6 +1226,11 @@
               <FilePath>..\..\Fatfs\ffunicode.c</FilePath>
             </File>
             <File>
+              <FileName>user_fatfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Fatfs\user_fatfs.c</FilePath>
+            </File>
+            <File>
               <FileName>ffconf.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Fatfs\ffconf.h</FilePath>

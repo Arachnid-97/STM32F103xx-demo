@@ -20,9 +20,9 @@
 #define LOW                 0
 #endif /* LOW */
 
-#define _AT24C_DUBUG		1
-#define AT24C_DUBUG_PRINTF(fmt,arg...)		do{\
-											if(_AT24C_DUBUG)\
+#define _AT24C_DEBUG		1
+#define AT24C_DEBUG_PRINTF(fmt,arg...)		do{\
+											if(_AT24C_DEBUG)\
 												printf("<<-EEPROM-DEBUG->> < %s >[%d]\n"fmt"\n",__FILE__,__LINE__, ##arg);\
 											}while(0)
 

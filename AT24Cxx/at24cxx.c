@@ -62,7 +62,7 @@ static void IIC_DMA_Config( uint32_t pBuffer, uint32_t BufferSize, uint32_t Dire
 static uint8_t TimeOut_Callback( char ErrorCode )
 {
     /* 等待超时后的处理,输出错误信息 */
-    AT24C_DUBUG_PRINTF("IIC 等待超时!  EerrorCode = %d\n",ErrorCode);
+    AT24C_DEBUG_PRINTF("IIC 等待超时!  EerrorCode = %d\n",ErrorCode);
 
     return 0;
 }
@@ -1029,7 +1029,7 @@ void AT24Cxx_Init(void)
 #if USE_SIMULATE_IIC
 	if(0 == EE_IIC_Check(s_AT24Cxx_Addr))
 	{
-		AT24C_DUBUG_PRINTF("The EEPROM device could not be found\n");
+		AT24C_DEBUG_PRINTF("The EEPROM device could not be found\n");
 	}
 	
 #endif /* USE_SIMULATE_IIC */
@@ -1052,7 +1052,7 @@ static uint8_t EE_Test(void)
 	uint16_t i;
 
 	/* 单字节读写测试 */
-	AT24C_DUBUG_PRINTF("单字节读写测试\n");
+	AT24C_DEBUG_PRINTF("单字节读写测试\n");
 	if(AT24Cxx_Write_Byte(0xBB, USE_TEST_ADDR + 0x200))
 	{
 		AT24Cxx_Busy_Wait();
@@ -1062,14 +1062,14 @@ static uint8_t EE_Test(void)
 
 #endif /* USE_SIMULATE_IIC */
 		
-		AT24C_DUBUG_PRINTF("data:0x%02X\n",AT24Cxx_Read_Byte(USE_TEST_ADDR + 0x200));
+		AT24C_DEBUG_PRINTF("data:0x%02X\n",AT24Cxx_Read_Byte(USE_TEST_ADDR + 0x200));
 		AT24Cxx_Busy_Wait();
 		GPIO_ResetBits(GPIOB, GPIO_Pin_0);
 	}
 
 #if 1
 	/* 单字节读写测试 */
-	AT24C_DUBUG_PRINTF("页读写测试\n");
+	AT24C_DEBUG_PRINTF("页读写测试\n");
 
 	for (i = 0;i < 256;i++) // 填充缓冲
 	{
@@ -1101,15 +1101,15 @@ static uint8_t EE_Test(void)
 	{
 		if(I2c_Buf_Read[i] != I2c_Buf_Write[i])
 		{
-			AT24C_DUBUG_PRINTF("0x%02X , i = %d\n", I2c_Buf_Read[i], i);
-			AT24C_DUBUG_PRINTF("错误:I2C EEPROM写入与读出的数据不一致\n\r");
+			AT24C_DEBUG_PRINTF("0x%02X , i = %d\n", I2c_Buf_Read[i], i);
+			AT24C_DEBUG_PRINTF("错误:I2C EEPROM写入与读出的数据不一致\n\r");
 			return 0;
 		}
 		printf("0x%02X ", I2c_Buf_Read[i]);
 		if(i%11 == 10 || i == 255)
 			printf("\n\r");    
 	}
-	AT24C_DUBUG_PRINTF("I2C(AT24C02)读写测试成功\n\r");
+	AT24C_DEBUG_PRINTF("I2C(AT24C02)读写测试成功\n\r");
 
 #endif
 	

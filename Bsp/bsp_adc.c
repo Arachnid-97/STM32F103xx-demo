@@ -17,7 +17,7 @@ float Get_ADC_Result(void)
 
 	temp =(float) ADC_ConvertedValue / 4096*VDD_VALUE;	// 读取转换的 AD值
 
-	DUBUG_PRINTF(">>>>> 电压值:%d\r\n",(int)temp);
+	DEBUG_PRINTF(">>>>> 电压值:%d\r\n",(int)temp);
 
     return temp;                 
 }

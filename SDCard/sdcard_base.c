@@ -1,4 +1,5 @@
 #include "sdcard_base.h"
+#include "stm32_eval_sdio_sd.h"
 
 
 /************************************************
@@ -95,7 +96,7 @@ void SD_LowLevel_Init(void)
     /*!< Dx /CLK and CMD clock enable */
     SD_SDIO_IO_APBxClock_FUN(SD_SDIO_Dx_CLK | SD_SDIO_CLK_CLK | SD_SDIO_CMD_CLK, ENABLE);
 	
-#ifdef _SD_SPECCY
+#if _SD_SPECCY
 	/*!< sd detect clock enable */
 	SD_DETECT_APBxClock_FUN(SD_DETECT_GPIO_CLK, ENABLE);
 
@@ -112,7 +113,7 @@ void SD_LowLevel_Init(void)
     GPIO_InitStructure.GPIO_Pin = SD_SDIO_CMD_PINS;
     GPIO_Init(SD_SDIO_CMD_PORT, &GPIO_InitStructure);
 
-#ifdef _SD_SPECCY
+#if _SD_SPECCY
     /*!< Configure SD_SPI_DETECT_PIN pin: SD Card detect pin */
     GPIO_InitStructure.GPIO_Pin = SD_DETECT_PIN;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
@@ -165,6 +166,22 @@ void SD_LowLevel_DeInit(void)
     /*!< Configure PD.02 CMD line */
     GPIO_InitStructure.GPIO_Pin = SD_SDIO_CMD_PINS;
     GPIO_Init(SD_SDIO_CMD_PORT, &GPIO_InitStructure);
+}
+
+
+/************************************************************************/
+/*            STM32F10x SDIO Interrupt Handlers                         */
+/************************************************************************/
+
+/**
+  * @brief  This function handles SDIO global interrupt request.
+  * @param  None
+  * @retval None
+  */
+void SDIO_IRQHandler(void)
+{
+  /* Process All SDIO Interrupt Sources */
+  SD_ProcessIRQSrc();
 }
 
 

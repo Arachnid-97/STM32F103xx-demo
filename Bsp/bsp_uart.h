@@ -12,9 +12,9 @@
 #define TxBUFFER_SIZE   	100
 #define RxBUFFER_SIZE   	0xFF
 
-#define _DUBUG				0
-#define DUBUG_PRINTF(fmt,arg...)			do{\
-											if(_DUBUG)\
+#define _DEBUG				1
+#define DEBUG_PRINTF(fmt,arg...)			do{\
+											if(_DEBUG)\
 												printf("<<-DEBUG DATA->> "fmt"\n",##arg);\
 											}while(0)
 

@@ -21,7 +21,7 @@ static __IO uint32_t W25Q_TimeOut = MAX_TIME_OUT;
 static uint8_t TimeOut_Callback( char ErrorCode )
 {
 	/* 等待超时后的处理,输出错误信息 */
-	W25Q_DUBUG_PRINTF("SPI 等待超时!	  EerrorCode = %d\n",ErrorCode);
+	W25Q_DEBUG_PRINTF("SPI 等待超时!	  EerrorCode = %d\n",ErrorCode);
 
 	return 0;
 }
@@ -182,7 +182,7 @@ void W25Qxx_Page_Program( uint8_t *pBuffer, uint32_t Address, uint16_t Len )
 	if(Len > W25Q_PAGE_SIZE)
 	{
 		Len = W25Q_PAGE_SIZE;
-		W25Q_DUBUG_PRINTF("W25Qxx Page Program data too large!\n"); 
+		W25Q_DEBUG_PRINTF("W25Qxx Page Program data too large!\n"); 
 	}
 	while(Len--)
 	{
@@ -536,19 +536,19 @@ void W25Qxx_Init(void)
 	
 	W25Qxx_Config();
 	
-#if(_W25Q_DUBUG)
+#if(_W25Q_DEBUG)
 	FlashID = W25Qxx_Read_JEDECID();
-	W25Q_DUBUG_PRINTF("FlashID is 0x%X,Manufacturer Device ID is 0x%X\r\n",	\
+	W25Q_DEBUG_PRINTF("FlashID is 0x%X,Manufacturer Device ID is 0x%X\r\n",	\
 				FlashID, W25Qxx_Read_DeviceID());
 	if(FlashID != JEDEC_ID)
 	{
 		/* 读取错误处理 */
-		W25Q_DUBUG_PRINTF("SPI read-write Error, please check the connection between MCU and SPI Flash\n");
+		W25Q_DEBUG_PRINTF("SPI read-write Error, please check the connection between MCU and SPI Flash\n");
 	}
 	else
 	{
 		/* 读取成功处理 */
-		W25Q_DUBUG_PRINTF("SPI read-write succeed\n");
+		W25Q_DEBUG_PRINTF("SPI read-write succeed\n");
 		
 //		uint8_t Tx_buff[] = "FLASH读写测试实验\r\n";
 //		uint8_t Rx_buff[] = "FLASH读写测试实验\r\n";
@@ -556,10 +556,10 @@ void W25Qxx_Init(void)
 //		W25Qxx_Sector_Erase(0x0100);
 //		W25Qxx_Write_Flash(Tx_buff, 0x0100, (sizeof(Tx_buff) / sizeof(*(Tx_buff))));
 //		W25Qxx_Read_Flash(Rx_buff, 0x0100, (sizeof(Tx_buff) / sizeof(*(Tx_buff))));
-//		W25Q_DUBUG_PRINTF("读出的数据：%s\n", Rx_buff);
+//		W25Q_DEBUG_PRINTF("读出的数据：%s\n", Rx_buff);
 	}
 
-#endif /* _W25Q_DUBUG */
+#endif /* _W25Q_DEBUG */
 }
 
 

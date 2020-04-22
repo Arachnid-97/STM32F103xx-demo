@@ -31,10 +31,10 @@
 #include "at24cxx.h"
 #include "user_sdcard.h"
 #include "bsp_rtc.h"
+#include "user_fatfs.h"
 
 
 /* Private variables ---------------------------------------------------------*/
-
 struct rtc_time RTC_Time = {
 0,38,20,8,6,2,2020
 };
@@ -66,11 +66,12 @@ int main(void)
 //	RTC_Init(&RTC_Time);
 	
 	/* -------- End -------- */
-	
-	RCC_GetClocksFreq(&Rcc_clock);
-	
-//	SD_test();
 
+	RCC_GetClocksFreq(&Rcc_clock);
+
+//	SD_test();
+//	FF_Test();
+	
 	/* Infinite loop */
     while (1)
     {

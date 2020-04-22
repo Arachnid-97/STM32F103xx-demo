@@ -17,7 +17,6 @@
 #define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
 #define DEV_MMC		1	/* Example: Map MMC/SD card to physical drive 1 */
 #define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
-#define DEV_SD		3	/* Example: Map USB MSD to physical drive 2 */
 
 
 /*-----------------------------------------------------------------------*/
@@ -41,8 +40,11 @@ DSTATUS disk_status (
 
     case DEV_MMC :
 //		result = MMC_disk_status();
+        result = SD_disk_status();
 
         // translate the reslut code here
+        if(1 == result)
+            stat &= ~STA_NOINIT;
 
         break;
 
@@ -52,16 +54,8 @@ DSTATUS disk_status (
         // translate the reslut code here
 
         break;
-
-    case DEV_SD :
-        result = SD_disk_status();
-
-        // translate the reslut code here
-        if(1 == result)
-            stat &= ~STA_NOINIT;
-
-        break;
     }
+	
     return stat;
 }
 
@@ -88,8 +82,11 @@ DSTATUS disk_initialize (
 
     case DEV_MMC :
 //		result = MMC_disk_initialize();
+        result = SD_disk_initialize();
 
         // translate the reslut code here
+        if(1 == result)
+            stat &= ~STA_NOINIT;
 
         break;
 
@@ -99,16 +96,8 @@ DSTATUS disk_initialize (
         // translate the reslut code here
 
         break;
-
-    case DEV_SD :
-        result = SD_disk_initialize();
-
-        // translate the reslut code here
-        if(1 == result)
-            stat &= ~STA_NOINIT;
-
-        break;
     }
+	
     return stat;
 }
 
@@ -142,8 +131,11 @@ DRESULT disk_read (
         // translate the arguments here
 
 //		result = MMC_disk_read(buff, sector, count);
+        result = SD_disk_read(buff, sector, count);
 
         // translate the reslut code here
+        if(1 == result)
+            res = RES_OK;
 
         break;
 
@@ -153,17 +145,6 @@ DRESULT disk_read (
 //		result = USB_disk_read(buff, sector, count);
 
         // translate the reslut code here
-
-        break;
-
-    case DEV_SD :
-        // translate the arguments here
-
-        result = SD_disk_read(buff, sector, count);
-
-        // translate the reslut code here
-        if(1 == result)
-            res = RES_OK;
 
         break;
     }
@@ -203,8 +184,11 @@ DRESULT disk_write (
         // translate the arguments here
 
 //		result = MMC_disk_write(buff, sector, count);
+        result = SD_disk_write((uint8_t *)buff, sector, count);
 
         // translate the reslut code here
+        if(1 == result)
+            res = RES_OK;
 
         break;
 
@@ -214,17 +198,6 @@ DRESULT disk_write (
 //		result = USB_disk_write(buff, sector, count);
 
         // translate the reslut code here
-
-        break;
-
-    case DEV_SD :
-        // translate the arguments here
-
-        result = SD_disk_write((uint8_t *)buff, sector, count);
-
-        // translate the reslut code here
-        if(1 == result)
-            res = RES_OK;
 
         break;
     }
@@ -256,18 +229,6 @@ DRESULT disk_ioctl (
         break;
 
     case DEV_MMC :
-
-        // Process of the command for the MMC/SD card
-
-        break;
-
-    case DEV_USB :
-
-        // Process of the command the USB drive
-
-        break;
-
-    case DEV_SD :
         switch (cmd) {
         case CTRL_SYNC :		/* Wait for end of internal write process of the drive */
 			result = 1;
@@ -296,9 +257,15 @@ DRESULT disk_ioctl (
             res = RES_PARERR;
         }
 
-        // Process of the command the SD drive
+        // Process of the command for the MMC/SD card
         if(1 == result)
             res = RES_OK;
+
+        break;
+
+    case DEV_USB :
+
+        // Process of the command the USB drive
 
         break;
     }
@@ -327,5 +294,4 @@ DWORD get_fattime (void)
 
 
 /*---------------------------- END OF FILE ----------------------------*/
-
 

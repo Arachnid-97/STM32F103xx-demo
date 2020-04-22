@@ -3,14 +3,14 @@
 #include "bsp_uart.h"
 
 
-/* 不使用测试功能请注释掉该宏 */
-#define _SDCARD_TEST
+/* 测试功能宏选择 */
+#define _SDCARD_TEST				1
 
 /* User defined variables ----------------------------------------------------*/
 
 
 
-#ifdef _SDCARD_TEST
+#if _SDCARD_TEST
 /* Private typedef -----------------------------------------------------------*/
 typedef enum {FAILED = 0, PASSED = !FAILED} TestStatus;
 
@@ -152,7 +152,7 @@ uint8_t SD_disk_write( uint8_t *Buff, uint32_t Sector, uint32_t Count )
 
 
 /* Test functions ------------------------------------------------------------*/
-#ifdef _SDCARD_TEST
+#if _SDCARD_TEST
 
 /************************************************
 函数名称 ： SD_test
@@ -165,35 +165,35 @@ void SD_test(void)
     /*------------------------------ SD Init ---------------------------------- */
     if((Status = SD_Init()) != SD_OK)
     {
-        DUBUG_PRINTF("SD卡初始化失败，请确保SD卡已正确接入开发板，或换一张SD卡测试！\n");
+        DEBUG_PRINTF("SD卡初始化失败，请确保SD卡已正确接入开发板，或换一张SD卡测试！\n");
     }
 
     while((Status == SD_OK) && (SDCardOperation != SD_OPERATION_END) && (SD_Detect()== SD_PRESENT))
     {
         switch(SDCardOperation)
         {
-        /*-------------------------- SD Erase Test ---------------------------- */
-        case (SD_OPERATION_ERASE):
-        {
-            SD_EraseTest();
-            SDCardOperation = SD_OPERATION_BLOCK;
-            break;
-        }
-        /*-------------------------- SD Single Block Test --------------------- */
-        case (SD_OPERATION_BLOCK):
-        {
-            SD_SingleBlockTest();
-            SDCardOperation = SD_OPERATION_MULTI_BLOCK;
-            break;
-        }
-        /*-------------------------- SD Multi Blocks Test --------------------- */
-        case (SD_OPERATION_MULTI_BLOCK):
-        {
-            SD_MultiBlockTest();
-            SDCardOperation = SD_OPERATION_END;
-            break;
-        }
-        }
+			/*-------------------------- SD Erase Test ---------------------------- */
+			case (SD_OPERATION_ERASE):
+			{
+				SD_EraseTest();
+				SDCardOperation = SD_OPERATION_BLOCK;
+				break;
+			}
+			/*-------------------------- SD Single Block Test --------------------- */
+			case (SD_OPERATION_BLOCK):
+			{
+				SD_SingleBlockTest();
+				SDCardOperation = SD_OPERATION_MULTI_BLOCK;
+				break;
+			}
+			/*-------------------------- SD Multi Blocks Test --------------------- */
+			case (SD_OPERATION_MULTI_BLOCK):
+			{
+				SD_MultiBlockTest();
+				SDCardOperation = SD_OPERATION_END;
+				break;
+			}
+		}
     }
 }
 
@@ -230,11 +230,11 @@ void SD_EraseTest(void)
 
     if(EraseStatus == PASSED)
     {
-        DUBUG_PRINTF("SD卡擦除测试成功！\n");
+        DEBUG_PRINTF("SD卡擦除测试成功！\n");
     }
     else
     {
-        DUBUG_PRINTF("SD卡擦除测试失败！\n");
+        DEBUG_PRINTF("SD卡擦除测试失败！\n");
     }
 }
 
@@ -275,11 +275,11 @@ void SD_SingleBlockTest(void)
 
     if(TransferStatus1 == PASSED)
     {
-        DUBUG_PRINTF("Single block 测试成功！\n");
+        DEBUG_PRINTF("Single block 测试成功！\n");
     }
     else
     {
-        DUBUG_PRINTF("Single block 测试失败，请确保SD卡正确接入开发板，或换一张SD卡测试！\n");
+        DEBUG_PRINTF("Single block 测试失败，请确保SD卡正确接入开发板，或换一张SD卡测试！\n");
     }
 }
 
@@ -320,11 +320,11 @@ void SD_MultiBlockTest(void)
 
     if(TransferStatus2 == PASSED)
     {
-        DUBUG_PRINTF("Multi block 测试成功！");
+        DEBUG_PRINTF("Multi block 测试成功！\n");
     }
     else
     {
-        DUBUG_PRINTF("Multi block 测试失败，请确保SD卡正确接入开发板，或换一张SD卡测试！");
+        DEBUG_PRINTF("Multi block 测试失败，请确保SD卡正确接入开发板，或换一张SD卡测试！\n");
     }
 }
 

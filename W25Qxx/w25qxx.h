@@ -20,9 +20,9 @@
 #define LOW                 0
 #endif /* LOW */
 
-#define _W25Q_DUBUG			1
-#define W25Q_DUBUG_PRINTF(fmt,arg...)		do{\
-											if(_W25Q_DUBUG)\
+#define _W25Q_DEBUG			1
+#define W25Q_DEBUG_PRINTF(fmt,arg...)		do{\
+											if(_W25Q_DEBUG)\
 												printf("<<-FLASH-DEBUG->> < %s >[%d]\n"fmt"\n",__FILE__,__LINE__, ##arg);\
 											}while(0)
 

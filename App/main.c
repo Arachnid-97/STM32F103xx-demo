@@ -33,6 +33,11 @@
 #include "bsp_rtc.h"
 #include "user_fatfs.h"
 
+#include "../lvgl.h"
+#include "lv_port_disp.h"
+#include "lv_port_indev.h"
+#include "../demo/demo.h"
+#include "../lv_test_theme/lv_test_theme_1.h"
 
 /* Private variables ---------------------------------------------------------*/
 struct rtc_time RTC_Time = {
@@ -40,6 +45,28 @@ struct rtc_time RTC_Time = {
 };
 
 /* Private functions ---------------------------------------------------------*/
+
+/************************************************
+函数名称 ： System_Starts
+功    能 ： 系统启动
+参    数 ： 无
+返 回 值 ： 无
+*************************************************/
+static void System_Starts(void)
+{
+	SystemInit();
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+	SysTick_Init();
+	Timer2_Config();
+	UART1_Config();
+//	UART2_Config();
+	LED_Config();
+//	Key_Config();
+//	ADCx_Init();
+	W25Qxx_Init();
+	AT24Cxx_Init();
+//	RTC_Init(&RTC_Time);
+}
 
 /************************************************
 函数名称 ： main
@@ -50,20 +77,9 @@ struct rtc_time RTC_Time = {
 int main(void)
 {
 	RCC_ClocksTypeDef Rcc_clock;
-
+		
 	/* Initial Configuration */
-	SystemInit();
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-	SysTick_Init();
-	Timer2_Config();
-	UART1_Config();
-//	UART2_Config();
-	LED_Config();
-//	Key_Config();
-//	ADCx_Init();
-//	W25Qxx_Init();
-//	AT24Cxx_Init();
-//	RTC_Init(&RTC_Time);
+	System_Starts();
 	
 	/* -------- End -------- */
 
@@ -71,11 +87,35 @@ int main(void)
 
 //	SD_test();
 //	FF_Test();
+
+#if 0
+    ILI9341_Init();         //LCD 初始化
 	
+	LCD_SetColors(RED,BLACK);
+    ILI9341_Clear(0,0,LCD_X_LENGTH,LCD_Y_LENGTH);	/* 清屏，显示全黑 */
+
+//	ILI9341_DrawRectangle(100, 50, 30, 80, 0);
+
+#endif
+
+	lv_init();
+	lv_port_disp_init();
+	lv_port_indev_init();
+
+	demo_create();
+
+//	lv_theme_t * th = lv_theme_night_init(210, NULL);     //Set a HUE value and a Font for the Night Theme
+//	lv_theme_t * th = lv_theme_material_init(210, NULL);
+
+//	lv_test_theme_1(th);		//Load the test GUI
+		
 	/* Infinite loop */
     while (1)
     {
 //		RTC_Time_Scan(RTC_GetCounter());
+		
+		lv_task_handler();
+		Delay(8);
 
 		if(Usart1.Frame_flag)
 		{
@@ -130,6 +170,8 @@ void assert_failed(uint8_t* file, uint32_t line)
     /* User can add his own implementation to report the file name and line number,
        ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
+	printf(">>>>> Wrong parameters value: file %s on line %d\r\n", file, line);
+	
     /* Infinite loop */
     while (1)
     {

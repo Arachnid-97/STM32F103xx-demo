@@ -14,6 +14,7 @@ void FF_Test(void);
 void FF_System_Creates( char *Drive, uint8_t Opt );
 uint8_t FF_OpenWrite( char *pFile, void *pStr, uint16_t Len );
 uint8_t FF_OpenRead( char *pFile, void *pStr, uint16_t Len );
+void FF_ViewRootDir( char *pDrive );
 
 
 #endif	/* __USER_FATFS_H */

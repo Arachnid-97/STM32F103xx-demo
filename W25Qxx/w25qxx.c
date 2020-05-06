@@ -3,7 +3,7 @@
 #include "bsp_uart.h"
 
 
-/* 是否启用模拟 SPI */
+/* 是否启用模拟 SPI ,支持 mode 0 and mode 3*/
 #define USE_SIMULATE_SPI		0
 
 #define MAX_TIME_OUT	((uint32_t)0x1000)

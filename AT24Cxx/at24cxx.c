@@ -14,8 +14,8 @@
 #define IIC_DMA_ENABLE			1
 
 /* EEPROM读写测试宏 */
-#define _EE_TEST				0
-#define USE_TEST_ADDR			0x0070
+#define _EE_TEST				1
+#define USE_TEST_ADDR			0x0110
 
 
 /* 使用 16位地址则定义该宏,否者默认 8位地址 */
@@ -163,7 +163,7 @@ static uint8_t AT24Cxx_Busy_Wait(void)
             temp = TimeOut_Callback(2);
             break;
         }
-    } while(!(I2C_ReadRegister(AT24C_I2Cx, I2C_Register_SR1) & 0x0002));
+    } while(!(temp_SR1 & 0x0002));
 
     /* Clear AF flag */
     I2C_ClearFlag(AT24C_I2Cx, I2C_FLAG_AF);
@@ -1058,13 +1058,12 @@ static uint8_t EE_Test(void)
 		AT24Cxx_Busy_Wait();
 
 #if USE_SIMULATE_IIC
-		Delay_us(0x6FFFF);		// 模拟读写需要等待一段时间，否则会出错
+		Delay(0xFFF);		// 模拟读写需要等待一段时间，否则会出错
 
 #endif /* USE_SIMULATE_IIC */
 		
 		AT24C_DEBUG_PRINTF("data:0x%02X\n",AT24Cxx_Read_Byte(USE_TEST_ADDR + 0x200));
 		AT24Cxx_Busy_Wait();
-		GPIO_ResetBits(GPIOB, GPIO_Pin_0);
 	}
 
 #if 1
@@ -1086,7 +1085,7 @@ static uint8_t EE_Test(void)
 //	AT24Cxx_Busy_Wait();
 
 #if USE_SIMULATE_IIC
-	Delay_us(0x6FFFF);			// 模拟读写需要等待一段时间，否则会出错
+	Delay(0xFFF);			// 模拟读写需要等待一段时间，否则会出错
 
 #endif /* USE_SIMULATE_IIC */
 	

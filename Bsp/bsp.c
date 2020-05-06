@@ -1,7 +1,12 @@
 #include "bsp.h"
 
 
-static __IO u32 TimingDelay = 0;
+/* Systick时基使用 */
+#define SYSTICK_START_ENABLE		1
+
+#define TICK_MAX_DELAY				0xFFFFFFFFU
+
+static __IO uint32_t uwTick = 0;
 uint32_t ChipUniqueID[3] = {0};
 
 /* Setup SysTick Timer for 1 msec interrupts.
@@ -20,11 +25,11 @@ uint32_t ChipUniqueID[3] = {0};
    inside the misc.c file.
 
 3. You can change the SysTick IRQ priority by calling the
-   NVIC_SetPriority(SysTick_IRQn,...) just after the SysTick_Config() function 
+   NVIC_SetPriority(SysTick_IRQn,...) just after the SysTick_Config() function
    call. The NVIC_SetPriority() is defined inside the core_cm3.h file.
 
 4. To adjust the SysTick time base, use the following formula:
-						
+
 	 Reload Value = SysTick Counter Clock (Hz) x  Desired Time base (s)
 
    - Reload Value is the parameter to be passed for SysTick_Config() function
@@ -39,53 +44,68 @@ uint32_t ChipUniqueID[3] = {0};
 *************************************************/
 void SysTick_Init(void)
 {
-	/* SystemFrequency / 1000    1ms中断一次
-	 * SystemFrequency / 100000	 10us中断一次
-	 * SystemFrequency / 1000000 1us中断一次
-	 */
-	if (SysTick_Config(SystemCoreClock / 1000000))	// ST3.5.0库版本
-	{ 
-		/* Capture error */ 
-		while(1);
-	}
-	
-	// 关闭滴答定时器  
-	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;	
+    /* SystemFrequency / 1000    1ms中断一次
+     * SystemFrequency / 100000	 10us中断一次
+     * SystemFrequency / 1000000 1us中断一次
+     */
+    if (SysTick_Config(SystemCoreClock / 1000))	// ST3.5.0库版本
+    {
+        /* Capture error */
+        while(1);
+    }
+
+#if	SYSTICK_START_ENABLE
+    // 使能滴答定时器
+    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
+
+#else
+    // 关闭滴答定时器
+    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+
+#endif /* SYSTICK_START_ENABLE */
 }
 
 /************************************************
-函数名称 ： Delay_us
-功    能 ： us延时程序,1us为一个单位
+函数名称 ： Delay
+功    能 ： 延时程序,以 Tick时基为准
 参    数 ： nTime ---- 时间次数
 返 回 值 ： 无
 *************************************************/
-void Delay_us( __IO u32 nTime )
-{ 
-	TimingDelay = nTime;	
+void Delay( __IO u32 nTime )
+{
+    uint32_t tickstart = uwTick;
+    uint32_t wait = nTime;
 
-	// 使能滴答定时器  
-	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
+    /* Add a freq to guarantee minimum wait */
+    if (wait < TICK_MAX_DELAY)
+    {
+        wait++;
+    }
 
-	while( TimingDelay != 0 );
-	
-	// 关闭滴答定时器  
-	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;	
+#if	(0 == SYSTICK_START_ENABLE)
+    // 使能滴答定时器
+    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
+#endif /* SYSTICK_START_ENABLE */
+
+    while ((uwTick - tickstart) < wait);
+
+#if	(0 == SYSTICK_START_ENABLE)
+    // 关闭滴答定时器
+    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+#endif /* SYSTICK_START_ENABLE */
+
 }
 
-/************************************************
-函数名称 ： TimingDelay_Decrement
-功    能 ： 获取节拍程序
-参    数 ： 无
-返 回 值 ： 无
-注    意 ： 在 SysTick 中断函数 SysTick_Handler()调用
-*************************************************/
-void TimingDelay_Decrement(void)
+/**
+  * @brief This function is called to increment  a global variable "uwTick"
+  *        used as application time base.
+  * @note In the default implementation, this variable is incremented each 1
+  *       in SysTick ISR.
+  * @retval None
+  */
+void IncTick(void)
 {
-	if(TimingDelay != 0x00)
-	{ 
-		TimingDelay--;
-	}
-	
+    uwTick++;
 }
 
 /************************************************
@@ -96,23 +116,21 @@ void TimingDelay_Decrement(void)
 *************************************************/
 void Get_ChipID(void)
 {
-	ChipUniqueID[0] = *(__IO u32 *)(0X1FFFF7F0); // 高字节
-	ChipUniqueID[1] = *(__IO u32 *)(0X1FFFF7EC); // 
-	ChipUniqueID[2] = *(__IO u32 *)(0X1FFFF7E8); // 低字节
+    ChipUniqueID[0] = *(__IO u32 *)(0X1FFFF7F0); // 高字节
+    ChipUniqueID[1] = *(__IO u32 *)(0X1FFFF7EC); //
+    ChipUniqueID[2] = *(__IO u32 *)(0X1FFFF7E8); // 低字节
 }
 
 /**
  * @brief  Reset the mcu by software
- *
  * @param  none
- *
- * @note   use the 3.5 version of the firmware library. 
+ * @note   use the 3.5 version of the firmware library.
  */
 void SystemSoftReset(void)
 {
     __set_FAULTMASK(1); 	// 关闭所有中断
     NVIC_SystemReset(); 	// 复位
-	while(1);
+    while(1);
 }
 
 

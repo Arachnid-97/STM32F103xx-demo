@@ -2,31 +2,41 @@
 #include "bsp_uart.h"
 
 
+#define FATFS_DEBUG_PRINTF(fmt,arg...)		do{\
+											if(_DEBUG)\
+												printf(""fmt"",##arg);\
+											}while(0)
+
+/* 设置操作的驱动盘 */
+#define DRIVER_DISK			"1:"
+
 FATFS FatFs;				/* 每个逻辑驱动器的文件系统对象 */
 FIL File;					/* 文件对象 */
 FRESULT res_sd;				/* FatFs 函数公共结果代码 */
 UINT br, bw;				/* 文件读 /写字节计数 */
 
 __attribute__ ((aligned (4)))  \
-BYTE FF_Buff[FF_MAX_SS] = "这是一个测试数据\r\n";	/* Working buffer */
-    
+BYTE FF_Buff[FF_MAX_SS] = "Fatfs文件系统读写测试实验\r\n";	/* Working buffer */
+
+
 /************************************************
-函数名称 ： FF_System_Creates
-功    能 ： Fatfs文件系统注册
-参    数 ： Drive ---- 盘符
-			Opt ---- 0：现在不要安装（在第一次访问该卷时安装）
-					 1：强制安装该卷以检查它是否可以工作
+函数名称 ： FF_Test
+功    能 ： Fatfs文件系统测试
+参    数 ： 无
 返 回 值 ： 无
 *************************************************/
 void FF_Test(void)
 {
-	FF_System_Creates("1:", 1);
-	FF_OpenWrite("1:temp.txt", FF_Buff, 21);
-	FF_OpenRead("1:temp.txt", &FF_Buff[1024], 21);
+	uint32_t num = 50;
+	
+	FF_System_Creates(DRIVER_DISK, 1);
+	FF_ViewRootDir(DRIVER_DISK);
+	FF_OpenWrite("1:temp.txt", FF_Buff, num);
+	FF_OpenRead("1:temp.txt", &FF_Buff[1024], num);
 	
 	
     /* 不再使用文件系统，取消挂载文件系统 */
-    f_mount(NULL,"1:", 1);
+    f_mount(NULL, DRIVER_DISK, 1);
 }
 
 /************************************************
@@ -78,7 +88,7 @@ void FF_System_Creates( char *pDrive, uint8_t Opt )
 	}
 	else
 	{
-		printf("挂载磁盘完成，但并未安装。\r\n");
+		DEBUG_PRINTF("挂载磁盘完成，但并未安装。\r\n");
 	}
 }
 
@@ -160,6 +170,74 @@ uint8_t FF_OpenRead( char *pFile, void *pStr, uint16_t Len )
     f_close(&File);		// 不再读写，关闭文件
 
 	return temp;
+}
+
+/************************************************
+函数名称 ： FF_ViewRootDir
+功    能 ： Fatfs文件扫描显示
+参    数 ： Drive ---- 盘符
+返 回 值 ： 无
+*************************************************/
+void FF_ViewRootDir( char *pDrive )
+{
+    /* 本函数使用的局部变量占用较多，请修改启动文件，保证堆栈空间够用 */
+    DIR DirInf;
+    FILINFO FileInf;
+    uint32_t cnt = 0;
+
+    /* 打开根文件夹 */
+    res_sd = f_opendir(&DirInf, pDrive);
+    if (res_sd != FR_OK)
+    {
+        DEBUG_PRINTF("！！打开根目录失败。(error code:%d)\r\n", res_sd);
+        return;
+    }
+
+    /* 读取当前文件夹下的文件和目录 */
+	DEBUG_PRINTF("当前文件夹下的文件信息：");
+    FATFS_DEBUG_PRINTF("\r\n|      属性      |  文件大小  | 文件名\r\n");
+    for (cnt = 0; ;cnt++)
+    {
+        res_sd = f_readdir(&DirInf, &FileInf);         /* 读取目录项，索引会自动下移 */
+        if (res_sd != FR_OK || FileInf.fname[0] == 0)
+        {
+            break;
+        }
+
+        if (FileInf.fname[0] == '.')
+        {
+            continue;
+        }
+
+        /* 判断是文件类型及目录目录 */
+		switch(FileInf.fattrib)
+		{
+			case AM_DIR:
+				FATFS_DEBUG_PRINTF("| (0x%02X)子目录  ", FileInf.fattrib);
+				break;
+			case AM_RDO:
+				FATFS_DEBUG_PRINTF("| (0x%02X)只读文件", FileInf.fattrib);
+				break;
+			case AM_HID:
+				FATFS_DEBUG_PRINTF("| (0x%02X)隐藏文件", FileInf.fattrib);
+				break;
+			case AM_SYS:
+				FATFS_DEBUG_PRINTF("| (0x%02X)系统文件", FileInf.fattrib);
+				break;
+			case AM_ARC:
+				FATFS_DEBUG_PRINTF("| (0x%02X)存档文件", FileInf.fattrib);
+				break;
+			default:
+				FATFS_DEBUG_PRINTF("| (0x%02X)未知类型", FileInf.fattrib);
+				break;
+		}
+
+        /* 打印文件大小, 最大4G */
+        FATFS_DEBUG_PRINTF(" |%10d ", FileInf.fsize);
+
+        FATFS_DEBUG_PRINTF(" | %s\r\n", (char *)FileInf.fname);    /* 长文件名 */
+    }
+	FATFS_DEBUG_PRINTF("\r\n\n");
 }
 
 

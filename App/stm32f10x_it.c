@@ -25,6 +25,7 @@
 #include "stm32f10x_it.h"
 #include "bsp.h"
 #include "bsp_gpio.h"
+#include "lvgl.h"
 
 
 /** @addtogroup STM32F10x_StdPeriph_Template
@@ -137,7 +138,8 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-	TimingDelay_Decrement();
+	IncTick();
+	lv_tick_inc(1);
 }
 
 /******************************************************************************/

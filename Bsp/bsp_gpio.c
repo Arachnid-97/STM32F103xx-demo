@@ -19,7 +19,7 @@ void LED_Config(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_Init(LED_GPIO_PORT, &GPIO_InitStructure);
 	
-	LED_OFF;	
+	LED_OFF;
 }
 
 /************************************************

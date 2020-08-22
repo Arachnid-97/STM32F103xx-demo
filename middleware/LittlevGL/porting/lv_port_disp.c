@@ -11,8 +11,8 @@
  *********************/
 #include "lv_port_disp.h"
 
-//#include "ili9341.h"
-#include "tft.h"
+//#include "../TFT/ili9341.h"
+#include "../TFT/tft.h"
 
 /*********************
  *      DEFINES

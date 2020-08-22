@@ -11,8 +11,8 @@
  *********************/
 #include "lv_port_indev.h"
 
-#include "xpt2046.h"
-#include "touchpad.h"
+#include "../Touchpad/xpt2046.h"
+#include "../Touchpad/touchpad.h"
 
 /*********************
  *      DEFINES

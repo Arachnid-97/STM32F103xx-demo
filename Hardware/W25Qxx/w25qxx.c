@@ -1,4 +1,4 @@
-#include "w25qxx.h"
+#include "./W25Qxx/w25qxx.h"
 #include "bsp_spi.h"
 #include "bsp_uart.h"
 

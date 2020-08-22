@@ -190,10 +190,10 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32_eval_sdio_sd.h"
+#include "./SDCard/stm32_eval_sdio_sd.h"
 
 /* 必须依赖以下头文件才能编译成功 */
-#include "sdcard_base.h"
+#include "./SDCard/sdcard_base.h"
 
 /** @addtogroup Utilities
   * @{

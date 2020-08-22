@@ -6,9 +6,9 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "tft.h"
+#include "../TFT/tft.h"
+#include "../TFT/ili9341.h"
 #include "stm32f10x.h"
-#include "ili9341.h"
 
 /*********************
  *      DEFINES
@@ -398,6 +398,7 @@ void TFT_DrawArrow(uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1,uint16_t w,ui
 	   }
 	}
 }
+
 /**********************
  *   STATIC FUNCTIONS
  **********************/

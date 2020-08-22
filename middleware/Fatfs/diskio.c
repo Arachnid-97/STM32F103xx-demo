@@ -10,7 +10,7 @@
 #include "ff.h"			/* Obtains integer types */
 #include "diskio.h"		/* Declarations of disk functions */
 
-#include "user_sdcard.h"
+#include "./SDCard/user_sdcard.h"
 
 
 /* Definitions of physical drive number for each drive */

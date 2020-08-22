@@ -27,9 +27,9 @@
 #include "bsp_uart.h"
 #include "bsp_gpio.h"
 #include "bsp_adc.h"
-#include "w25qxx.h"
-#include "at24cxx.h"
-#include "user_sdcard.h"
+#include "./W25Qxx/w25qxx.h"
+#include "./AT24Cxx/at24cxx.h"
+#include "./SDCard/user_sdcard.h"
 #include "bsp_rtc.h"
 #include "user_fatfs.h"
 

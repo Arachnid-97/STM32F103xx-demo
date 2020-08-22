@@ -6,9 +6,9 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "touchpad.h"
+#include "../Touchpad/touchpad.h"
 #include "stm32f10x.h"
-#include "xpt2046.h"
+#include "../Touchpad/xpt2046.h"
 
 /*********************
  *      DEFINES

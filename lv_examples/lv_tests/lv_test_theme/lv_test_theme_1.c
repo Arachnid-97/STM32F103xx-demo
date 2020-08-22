@@ -65,8 +65,9 @@ static void create_tab1(lv_obj_t * parent)
 {
     lv_page_set_scrl_layout(parent, LV_LAYOUT_PRETTY);
 
-    lv_theme_t * th = lv_theme_get_current();
+    lv_theme_t * th = lv_theme_get_current();		// 获取当前主题
 
+	/* 主题样式设置 */
     static lv_style_t h_style;
     lv_style_copy(&h_style, &lv_style_transp);
     h_style.body.padding.inner = LV_DPI / 10;
@@ -75,15 +76,18 @@ static void create_tab1(lv_obj_t * parent)
     h_style.body.padding.top = LV_DPI / 10;
     h_style.body.padding.bottom = LV_DPI / 10;
 
+	/* 标签按钮 */
     lv_obj_t * h = lv_cont_create(parent, NULL);
+	
     lv_obj_set_style(h, &h_style);
     lv_obj_set_click(h, false);
     lv_cont_set_fit(h, LV_FIT_TIGHT);
     lv_cont_set_layout(h, LV_LAYOUT_COL_M);
 
+	/* 设置带标签的按钮 */
     lv_obj_t * btn = lv_btn_create(h, NULL);
     lv_btn_set_fit(btn, LV_FIT_TIGHT);
-    lv_btn_set_toggle(btn, true);
+    lv_btn_set_toggle(btn, true);					// 启用开/关状态
     lv_obj_t * btn_label = lv_label_create(btn, NULL);
     lv_label_set_text(btn_label, "Button");
 
@@ -97,6 +101,7 @@ static void create_tab1(lv_obj_t * parent)
     btn_label = lv_label_create(btn, NULL);
     lv_label_set_text(btn_label, "Inactive");
 
+	/* 设置标签 */
     lv_obj_t * label = lv_label_create(h, NULL);
     lv_label_set_text(label, "Primary");
     lv_obj_set_style(label, th->style.label.prim);

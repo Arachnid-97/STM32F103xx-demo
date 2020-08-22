@@ -338,7 +338,7 @@
               <MiscControls>--gnu</MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER,USE_FULL_ASSERT,LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\App;..\..\Libraries\CMSIS;..\..\Libraries\CMSIS\startup;..\..\Libraries\STM32F10x_StdPeriph_Driver\src;..\..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\..\Bsp;..\..\Doc;..\..\W25Qxx;..\..\AT24Cxx;..\..\Fatfs;..\..\SDCard;..\..\TFT;..\..\Touchpad;..\..\LittlevGL;..\..\LittlevGL\porting;..\..\LittlevGL\src;..\..\LittlevGL\src\lv_core;..\..\LittlevGL\src\lv_draw;..\..\LittlevGL\src\lv_font;..\..\LittlevGL\src\lv_hal;..\..\LittlevGL\src\lv_misc;..\..\LittlevGL\src\lv_objx;..\..\LittlevGL\src\lv_themes;..\..\lv_examples;..\..\lv_examples\lv_apps;..\..\lv_examples\lv_tests;..\..\lv_examples\lv_tutorial;..\..\lv_examples\lv_apps\demo;..\..\lv_examples\lv_tests\lv_test_theme</IncludePath>
+              <IncludePath>..\..\App;..\..\Libraries\CMSIS;..\..\Libraries\CMSIS\startup;..\..\Libraries\STM32F10x_StdPeriph_Driver\src;..\..\Libraries\STM32F10x_StdPeriph_Driver\inc;..\..\Bsp;..\..\Hardware;..\..\Doc;..\..\middleware\Fatfs;..\..\middleware\LittlevGL;..\..\middleware\LittlevGL\porting;..\..\middleware\LittlevGL\src;..\..\middleware\LittlevGL\src\lv_core;..\..\middleware\LittlevGL\src\lv_draw;..\..\middleware\LittlevGL\src\lv_font;..\..\middleware\LittlevGL\src\lv_hal;..\..\middleware\LittlevGL\src\lv_misc;..\..\middleware\LittlevGL\src\lv_objx;..\..\middleware\LittlevGL\src\lv_themes;..\..\Hardware\LCD\TFT;..\..\lv_examples;..\..\lv_examples\lv_apps;..\..\lv_examples\lv_tests;..\..\lv_examples\lv_tutorial;..\..\lv_examples\lv_apps\demo;..\..\lv_examples\lv_tests\lv_test_theme</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1113,7 +1113,7 @@
             <File>
               <FileName>w25qxx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\W25Qxx\w25qxx.c</FilePath>
+              <FilePath>..\..\Hardware\W25Qxx\w25qxx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1192,12 +1192,12 @@
             <File>
               <FileName>at24cxx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\AT24Cxx\at24cxx.c</FilePath>
+              <FilePath>..\..\Hardware\AT24Cxx\at24cxx.c</FilePath>
             </File>
             <File>
               <FileName>ee_simulate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\AT24Cxx\ee_simulate.c</FilePath>
+              <FilePath>..\..\Hardware\AT24Cxx\ee_simulate.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1276,17 +1276,17 @@
             <File>
               <FileName>sdcard_base.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\SDCard\sdcard_base.c</FilePath>
+              <FilePath>..\..\Hardware\SDCard\sdcard_base.c</FilePath>
             </File>
             <File>
               <FileName>stm32_eval_sdio_sd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\SDCard\stm32_eval_sdio_sd.c</FilePath>
+              <FilePath>..\..\Hardware\SDCard\stm32_eval_sdio_sd.c</FilePath>
             </File>
             <File>
               <FileName>user_sdcard.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\SDCard\user_sdcard.c</FilePath>
+              <FilePath>..\..\Hardware\SDCard\user_sdcard.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1365,27 +1365,27 @@
             <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Fatfs\diskio.c</FilePath>
+              <FilePath>..\..\middleware\Fatfs\diskio.c</FilePath>
             </File>
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Fatfs\ff.c</FilePath>
+              <FilePath>..\..\middleware\Fatfs\ff.c</FilePath>
             </File>
             <File>
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Fatfs\ffunicode.c</FilePath>
+              <FilePath>..\..\middleware\Fatfs\ffunicode.c</FilePath>
             </File>
             <File>
               <FileName>user_fatfs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Fatfs\user_fatfs.c</FilePath>
+              <FilePath>..\..\middleware\Fatfs\user_fatfs.c</FilePath>
             </File>
             <File>
               <FileName>ffconf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\Fatfs\ffconf.h</FilePath>
+              <FilePath>..\..\middleware\Fatfs\ffconf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1393,177 +1393,24 @@
           <GroupName>Lcd</GroupName>
           <Files>
             <File>
-              <FileName>tft.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\TFT\tft.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>2</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <uGnu>2</uGnu>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>0</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
               <FileName>ili9341.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\TFT\ili9341.c</FilePath>
+              <FilePath>..\..\Hardware\LCD\TFT\ili9341.c</FilePath>
             </File>
             <File>
-              <FileName>touchpad.c</FileName>
+              <FileName>tft.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Touchpad\touchpad.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>2</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <uGnu>2</uGnu>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>0</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
+              <FilePath>..\..\Hardware\LCD\TFT\tft.c</FilePath>
             </File>
             <File>
               <FileName>xpt2046.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Touchpad\xpt2046.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>2</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <uGnu>2</uGnu>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>0</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
+              <FilePath>..\..\Hardware\LCD\Touchpad\xpt2046.c</FilePath>
+            </File>
+            <File>
+              <FileName>touchpad.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Hardware\LCD\Touchpad\touchpad.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1573,442 +1420,442 @@
             <File>
               <FileName>lv_debug.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_core\lv_debug.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_core\lv_debug.c</FilePath>
             </File>
             <File>
               <FileName>lv_disp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_core\lv_disp.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_core\lv_disp.c</FilePath>
             </File>
             <File>
               <FileName>lv_group.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_core\lv_group.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_core\lv_group.c</FilePath>
             </File>
             <File>
               <FileName>lv_indev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_core\lv_indev.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_core\lv_indev.c</FilePath>
             </File>
             <File>
               <FileName>lv_obj.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_core\lv_obj.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_core\lv_obj.c</FilePath>
             </File>
             <File>
               <FileName>lv_refr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_core\lv_refr.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_core\lv_refr.c</FilePath>
             </File>
             <File>
               <FileName>lv_style.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_core\lv_style.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_core\lv_style.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_draw.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_draw.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_draw_arc.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_draw_arc.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_basic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_draw_basic.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_draw_basic.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_draw_img.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_draw_img.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_label.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_draw_label.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_draw_label.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_line.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_draw_line.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_draw_line.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_rect.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_draw_rect.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_draw_rect.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_triangle.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_draw_triangle.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_draw_triangle.c</FilePath>
             </File>
             <File>
               <FileName>lv_img_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_img_cache.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_img_cache.c</FilePath>
             </File>
             <File>
               <FileName>lv_img_decoder.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_draw\lv_img_decoder.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_draw\lv_img_decoder.c</FilePath>
             </File>
             <File>
               <FileName>lv_font.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_fmt_txt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font_fmt_txt.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font_fmt_txt.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_roboto_12.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font_roboto_12.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font_roboto_12.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_roboto_12_subpx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font_roboto_12_subpx.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font_roboto_12_subpx.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_roboto_16.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font_roboto_16.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font_roboto_16.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_roboto_22.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font_roboto_22.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font_roboto_22.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_roboto_28.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font_roboto_28.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font_roboto_28.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_roboto_28_compressed.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font_roboto_28_compressed.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font_roboto_28_compressed.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_unscii_8.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_font\lv_font_unscii_8.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_font\lv_font_unscii_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_hal_disp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_hal\lv_hal_disp.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_hal\lv_hal_disp.c</FilePath>
             </File>
             <File>
               <FileName>lv_hal_indev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_hal\lv_hal_indev.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_hal\lv_hal_indev.c</FilePath>
             </File>
             <File>
               <FileName>lv_hal_tick.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_hal\lv_hal_tick.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_hal\lv_hal_tick.c</FilePath>
             </File>
             <File>
               <FileName>lv_anim.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_anim.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_anim.c</FilePath>
             </File>
             <File>
               <FileName>lv_area.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_area.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_area.c</FilePath>
             </File>
             <File>
               <FileName>lv_async.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_async.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_async.c</FilePath>
             </File>
             <File>
               <FileName>lv_bidi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_bidi.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_bidi.c</FilePath>
             </File>
             <File>
               <FileName>lv_circ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_circ.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_circ.c</FilePath>
             </File>
             <File>
               <FileName>lv_color.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_color.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_color.c</FilePath>
             </File>
             <File>
               <FileName>lv_fs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_fs.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_fs.c</FilePath>
             </File>
             <File>
               <FileName>lv_gc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_gc.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_gc.c</FilePath>
             </File>
             <File>
               <FileName>lv_ll.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_ll.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_ll.c</FilePath>
             </File>
             <File>
               <FileName>lv_log.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_log.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_log.c</FilePath>
             </File>
             <File>
               <FileName>lv_math.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_math.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_math.c</FilePath>
             </File>
             <File>
               <FileName>lv_mem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_mem.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_mem.c</FilePath>
             </File>
             <File>
               <FileName>lv_printf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_printf.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_printf.c</FilePath>
             </File>
             <File>
               <FileName>lv_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_task.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_task.c</FilePath>
             </File>
             <File>
               <FileName>lv_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_templ.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_txt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_txt.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_txt.c</FilePath>
             </File>
             <File>
               <FileName>lv_utils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_misc\lv_utils.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_misc\lv_utils.c</FilePath>
             </File>
             <File>
               <FileName>lv_arc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_arc.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_arc.c</FilePath>
             </File>
             <File>
               <FileName>lv_bar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_bar.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_bar.c</FilePath>
             </File>
             <File>
               <FileName>lv_btn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_btn.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_btn.c</FilePath>
             </File>
             <File>
               <FileName>lv_btnm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_btnm.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_btnm.c</FilePath>
             </File>
             <File>
               <FileName>lv_calendar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_calendar.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_calendar.c</FilePath>
             </File>
             <File>
               <FileName>lv_canvas.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_canvas.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_canvas.c</FilePath>
             </File>
             <File>
               <FileName>lv_cb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_cb.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_cb.c</FilePath>
             </File>
             <File>
               <FileName>lv_chart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_chart.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_chart.c</FilePath>
             </File>
             <File>
               <FileName>lv_cont.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_cont.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_cont.c</FilePath>
             </File>
             <File>
               <FileName>lv_cpicker.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_cpicker.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_cpicker.c</FilePath>
             </File>
             <File>
               <FileName>lv_ddlist.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_ddlist.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_ddlist.c</FilePath>
             </File>
             <File>
               <FileName>lv_gauge.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_gauge.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_gauge.c</FilePath>
             </File>
             <File>
               <FileName>lv_img.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_img.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_img.c</FilePath>
             </File>
             <File>
               <FileName>lv_imgbtn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_imgbtn.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_imgbtn.c</FilePath>
             </File>
             <File>
               <FileName>lv_kb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_kb.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_kb.c</FilePath>
             </File>
             <File>
               <FileName>lv_label.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_label.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_label.c</FilePath>
             </File>
             <File>
               <FileName>lv_led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_led.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_led.c</FilePath>
             </File>
             <File>
               <FileName>lv_line.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_line.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_line.c</FilePath>
             </File>
             <File>
               <FileName>lv_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_list.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_list.c</FilePath>
             </File>
             <File>
               <FileName>lv_lmeter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_lmeter.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_lmeter.c</FilePath>
             </File>
             <File>
               <FileName>lv_mbox.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_mbox.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_mbox.c</FilePath>
             </File>
             <File>
               <FileName>lv_objx_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_objx_templ.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_objx_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_page.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_page.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_page.c</FilePath>
             </File>
             <File>
               <FileName>lv_preload.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_preload.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_preload.c</FilePath>
             </File>
             <File>
               <FileName>lv_roller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_roller.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_roller.c</FilePath>
             </File>
             <File>
               <FileName>lv_slider.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_slider.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_slider.c</FilePath>
             </File>
             <File>
               <FileName>lv_spinbox.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_spinbox.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_spinbox.c</FilePath>
             </File>
             <File>
               <FileName>lv_sw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_sw.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_sw.c</FilePath>
             </File>
             <File>
               <FileName>lv_ta.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_ta.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_ta.c</FilePath>
             </File>
             <File>
               <FileName>lv_table.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_table.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_table.c</FilePath>
             </File>
             <File>
               <FileName>lv_tabview.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_tabview.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_tabview.c</FilePath>
             </File>
             <File>
               <FileName>lv_tileview.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_tileview.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_tileview.c</FilePath>
             </File>
             <File>
               <FileName>lv_win.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_objx\lv_win.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_objx\lv_win.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_alien.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme_alien.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme_alien.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_default.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme_default.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme_default.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_material.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme_material.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme_material.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_mono.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme_mono.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme_mono.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_nemo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme_nemo.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme_nemo.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_night.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme_night.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme_night.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme_templ.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_zen.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\src\lv_themes\lv_theme_zen.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\src\lv_themes\lv_theme_zen.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2018,68 +1865,22 @@
             <File>
               <FileName>lv_port_disp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\porting\lv_port_disp.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\porting\lv_port_disp.c</FilePath>
             </File>
             <File>
               <FileName>lv_port_fs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\porting\lv_port_fs.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <uC99>2</uC99>
-                    <uGnu>2</uGnu>
-                    <useXO>2</useXO>
-                    <v6Lang>0</v6Lang>
-                    <v6LangP>0</v6LangP>
-                    <vShortEn>2</vShortEn>
-                    <vShortWch>2</vShortWch>
-                    <v6Lto>0</v6Lto>
-                    <v6WtE>2</v6WtE>
-                    <v6Rtti>2</v6Rtti>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
+              <FilePath>..\..\middleware\LittlevGL\porting\lv_port_fs.c</FilePath>
             </File>
             <File>
               <FileName>lv_port_indev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LittlevGL\porting\lv_port_indev.c</FilePath>
+              <FilePath>..\..\middleware\LittlevGL\porting\lv_port_indev.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\middleware\LittlevGL\lv_conf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2202,11 +2003,6 @@
               <FileName>lv_test_theme_1.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\lv_examples\lv_tests\lv_test_theme\lv_test_theme_1.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LittlevGL\lv_conf.h</FilePath>
             </File>
             <File>
               <FileName>lv_ex_conf.h</FileName>

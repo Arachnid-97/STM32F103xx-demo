@@ -36,7 +36,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "ili9341.h"
+#include "../TFT/ili9341.h"
 
 /** @defgroup ILI9341_Private_TypesDefinitions
   * @{
